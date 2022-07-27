@@ -141,7 +141,7 @@ console.log(
 
     return {
       x: this._speed * Math.sin(angle) * delta,
-      y: this._speed * this._vec.y * delta,
+      y: this._speed * Math.cos(angle) * delta,
     };
   }
 }

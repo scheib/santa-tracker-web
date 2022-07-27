@@ -265,7 +265,6 @@ export default class GameThree {
     this._trail.push({x: -p.z, y: p.x});  // awkwardly go back to x,y coord system
 
     const angle = this._character.angleVec;
-    console.log("angle ", angle);
     const lookAt = new THREE.Vector3(p.x + angle.y, skiierSize / 2, p.z - angle.x);
     this._skiier.lookAt(lookAt.x, lookAt.y, lookAt.z);
 
