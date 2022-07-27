@@ -35,6 +35,7 @@
 <script type="module">
   import api from '../../src/scene/api.js';
   import GameThree from './js/game-three.js';
+  import * as vec from './js/vec.js';
 
   api.preload.images(
     'img/tiles.png',
@@ -92,6 +93,10 @@
         x: ev.offsetX - (ev.target.offsetWidth / 2),
         y: ev.offsetY - (ev.target.offsetHeight / 3),
       };
+      let inputVector = vec.unitVec(this._pointer);  // deal with bad client data
+
+      //this._inputAngle = 
+
       if (!this._tutorialDismissed) {
         this._tutorialDismissed = true;
         api.tutorialDismiss('elfski.mp4');

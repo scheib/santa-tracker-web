@@ -53,6 +53,7 @@ export class Character {
    * @return {number} line width due to rotation
    */
   get lineWidth() {
+    debugger;
     return this._line;
   }
 
@@ -74,6 +75,8 @@ export class Character {
    * @param {number} v angle in rads
    */
   set angle(v) {
+    debugger;
+
     this._vec.x = Math.cos(v);
     this._vec.y = Math.sin(v);
   }
@@ -103,11 +106,16 @@ export class Character {
    */
   tick(delta, target=null) {
     if (target) {
+//      console.log(target.x, target.y);
+    }
+    
+    if (target) {
       target = vec.unitVec(target);  // deal with bad client data
-
+console.log(this._vec.y.toFixed(2), target.y.toFixed(2));
       // player is drifting "up", so retain vector
+      //if (target.y < 0) { // && this._vec.y < stopBar) {
       if (target.y < 0 && this._vec.y < stopBar) {
-        target = {
+          target = {
           x: Math.sign(this._vec.x),
           y: 0,
         };
@@ -124,6 +132,7 @@ export class Character {
     const angle = this.angle;
     let accel = Math.cos(angle) - accelerationBar;
     if (accel < 0) {
+//console.log(accel, Math.tan(accel))
       accel = Math.tan(accel);
     }
 
