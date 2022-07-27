@@ -28,7 +28,6 @@ export class Character {
     this._speed = 0;
     
     /** @private {vec.Vector} */
-    this._vec = "NO";
     this._angle = initialAngle;
 
     /** @private {number} */
@@ -67,7 +66,7 @@ export class Character {
    * @return {vec.Vector} angle vector
    */
   get angleVec() {
-    return {x: Math.cos(this._angle), y: Math.sin(this._angle)}
+    return {x: Math.sin(this._angle), y: Math.cos(this._angle)}
   }
 
   /**
