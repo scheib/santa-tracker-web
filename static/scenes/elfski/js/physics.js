@@ -113,12 +113,14 @@ export class Character {
 
       const targetAngle = Math.atan2(target.x, target.y)
       const by = slerpRatio * delta * (maximumSpeed * 2 - this._speed);
+/** /
 console.log(
   "angle " + this._angle.toFixed(2),
   "target " + targetAngle.toFixed(2),
   "x "+target.x.toFixed(2),
   "y "+target.y.toFixed(2),
   "by " + by.toFixed(2));
+/**/
       this._angle = this._angle + by * (targetAngle - this._angle);
 
       this._line = Math.abs(targetAngle - this._angle);  // difference between player/goal
