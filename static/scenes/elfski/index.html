@@ -112,16 +112,7 @@
      */
     targetAngle() {
       if (this._pointer) {
-        let target = this._pointer;
-        // Input angle is above skier, so force to full left or right.
-        if (target.y < 0) {
-          target = {
-            x: (target.x > 0) ? 1 : -1,
-            y: 0,
-          };          
-        }
-
-        return Math.atan2(target.x, target.y);
+        return Math.atan2(this._pointer.x, this._pointer.y);
       }
       return null;
     }

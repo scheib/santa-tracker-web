@@ -101,6 +101,9 @@ export class Character {
    */
   tick(delta, targetAngle=null) {
     if (targetAngle) {
+      // Clamp target angle at most being horizontal left or right 90 degrees.
+      targetAngle = Math.min(Math.max(-Math.PI/2, targetAngle), Math.PI/2);
+
       const by = slerpRatio * delta * (maximumSpeed * 2 - this._speed);
 
       this._angle = this._angle + by * (targetAngle - this._angle);
