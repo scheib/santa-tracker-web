@@ -183,7 +183,7 @@
   });
 
   api.ready(async (data) => {
-    game.start(10); //data && data.level || 1);
+    game.start(data && data.level || 1);
   });
 </script>
 

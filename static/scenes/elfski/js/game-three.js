@@ -341,7 +341,6 @@ export default class GameThree {
    * @return {number}
    */
   get angle() {
-    console.error();
     return this._character.angle;
   }
 
