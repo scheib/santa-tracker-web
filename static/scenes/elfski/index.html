@@ -35,6 +35,7 @@
 <script type="module">
   import api from '../../src/scene/api.js';
   import GameThree from './js/game-three.js';
+  import * as vec from './js/vec.js';
 
   api.preload.images(
     'img/tiles.png',
@@ -106,6 +107,25 @@
       return this._game.score;
     }
 
+    /**
+     * @return {?number} targetAngle in radians. 0 is straight down == positive y axis.
+     */
+    targetAngle() {
+      if (this._pointer) {
+        let target = this._pointer;
+        // Input angle is above skier, so force to full left or right.
+        if (target.y < 0) {
+          target = {
+            x: (target.x > 0) ? 1 : -1,
+            y: 0,
+          };          
+        }
+
+        return Math.atan2(target.x, target.y);
+      }
+      return null;
+    }
+
     tick(now) {
       const delta = (now - this._lastFrameAt) / 1000;  // ratio of second
       this._lastFrameAt = now;
@@ -114,7 +134,7 @@
         this._gameStartAt = now;
       }
 
-      const crashed = this._game.tick(delta, this._pointer, Boolean(this._gameEndAt));
+      const crashed = this._game.tick(delta, this.targetAngle(), Boolean(this._gameEndAt));
       this.skiingNoises = Boolean(this._game.speed) && !this._gameEndAt;
 
       if (!crashed) {

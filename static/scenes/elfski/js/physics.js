@@ -95,32 +95,14 @@ export class Character {
 
   /**
    * @param {number} delta as fraction of second
-   * @param {?vec.Vector=} target relative to character position
+   * @param {?number} targetAngle in radians. 0 is straight down == positive y axis.
    * @return {{x: number, y: number}} amount to move by
    * @export
    */
-  tick(delta, target=null) {
-    if (target) {
-      target = vec.unitVec(target);  // deal with bad client data
-
-      // player is drifting "up", so retain vector
-      if (target.y < 0) {
-        target = {
-          x: (target.x > 0) ? 1 : -1,
-          y: 0,
-        };
-      }
-
-      const targetAngle = Math.atan2(target.x, target.y)
+  tick(delta, targetAngle=null) {
+    if (targetAngle) {
       const by = slerpRatio * delta * (maximumSpeed * 2 - this._speed);
-/** /
-console.log(
-  "angle " + this._angle.toFixed(2),
-  "target " + targetAngle.toFixed(2),
-  "x "+target.x.toFixed(2),
-  "y "+target.y.toFixed(2),
-  "by " + by.toFixed(2));
-/**/
+
       this._angle = this._angle + by * (targetAngle - this._angle);
 
       this._line = Math.abs(targetAngle - this._angle);  // difference between player/goal
