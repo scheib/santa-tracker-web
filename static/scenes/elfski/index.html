@@ -131,11 +131,11 @@
         }
       }
 
-      const left = this._trackedKeys['ArrowLeft'];
-      const right = this._trackedKeys['ArrowRight'];
-      const down = this._trackedKeys['ArrowDown'];
+      const left = this._trackedKeys['ArrowLeft'] || false;
+      const right = this._trackedKeys['ArrowRight'] || false;
+      const down = this._trackedKeys['ArrowDown'] || false;
       if (left || right || down) {
-        const averageAngleFromKeys = (left * -Math.PI/2 + right * Math.PI) / (left + right + down);
+        const averageAngleFromKeys = (left * (-Math.PI/2) + right * Math.PI/2) / (left + right + down);
         return averageAngleFromKeys;
       }
 
