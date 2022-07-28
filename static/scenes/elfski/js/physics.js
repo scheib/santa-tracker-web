@@ -99,7 +99,7 @@ export class Character {
    * @return {{x: number, y: number}} amount to move by
    * @export
    */
-  tick(delta, targetAngle=null) {
+  tick(delta, targetAngle) {
     if (Number.isFinite(targetAngle)) {
       // Clamp target angle at most being horizontal left or right 90 degrees.
       targetAngle = Math.min(Math.max(-Math.PI/2, targetAngle), Math.PI/2);
