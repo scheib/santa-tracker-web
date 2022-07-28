@@ -125,10 +125,7 @@
      */
     targetAngle() {
       if (this._pointer) {
-        const angleFromPointer = Math.atan2(this._pointer.x, this._pointer.y);
-        if (Number.isFinite(angleFromPointer)) {
-          return angleFromPointer;
-        }
+        return Math.atan2(this._pointer.x, this._pointer.y);
       }
 
       const left = this._trackedKeys['ArrowLeft'] || false;
@@ -139,7 +136,7 @@
         return averageAngleFromKeys;
       }
 
-      return null;
+      return undefined;
     }
 
     tick(now) {
