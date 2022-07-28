@@ -124,28 +124,22 @@
      * @return {?number} targetAngle in radians. 0 is straight down == positive y axis.
      */
     targetAngle(delta) {
-      let angle = this._lastTargetAngle;
       if (this._pointer) {
         const angleFromPointer = Math.atan2(this._pointer.x, this._pointer.y);
         if (Number.isFinite(angleFromPointer)) {
-          angle = angleFromPointer;
+          return angleFromPointer;
         }
       }
 
-      const angleChangeRate = 3;
-      const angleDelta = delta * angleChangeRate;
-      if (this._trackedKeys['ArrowLeft'] || this._trackedKeys['ArrowRight']) { // left/right keys
-        if (this._trackedKeys['ArrowLeft'])
-          angle -= angleDelta;
-
-        if (this._trackedKeys['ArrowRight'])
-          angle += angleDelta;
+      const left = this._trackedKeys['ArrowLeft'];
+      const right = this._trackedKeys['ArrowRight'];
+      const down = this._trackedKeys['ArrowDown'];
+      if (left || right || down) {
+        const averageAngleFromKeys = (left * -Math.PI/2 + right * Math.PI) / (left + right + down);
+        return averageAngleFromKeys;
       }
 
-      // Clamp target angle at most being horizontal left or right 90 degrees.
-      angle = Math.min(Math.max(-Math.PI/2, angle), Math.PI/2);
-
-      return this._lastTargetAngle = angle;
+      return null;
     }
 
     tick(now) {
@@ -202,7 +196,6 @@
       this._lastPresentsFound = 0;
       this.skiingNoises = false;
       this._trackedKeys = {};
-      this._lastTargetAngle = 0;
 
       this._game && this._game.dispose();
       this._game = new GameThree(this._canvas, './');
