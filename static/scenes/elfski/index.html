@@ -132,8 +132,9 @@
       const right = this._trackedKeys['ArrowRight'] || false;
       const down = this._trackedKeys['ArrowDown'] || false;
       if (left || right || down) {
-        const averageAngleFromKeys = (left * (-Math.PI/2) + right * Math.PI/2) / (left + right + down);
-        return averageAngleFromKeys;
+        // Average the direction of all current held keys.
+        // Gives one of 5 possible directions: left, down, right, and two downward diagonals.
+        return (left * (-Math.PI/2) + right * Math.PI/2) / (left + right + down);
       }
 
       return undefined;
