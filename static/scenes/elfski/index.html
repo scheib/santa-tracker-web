@@ -120,10 +120,9 @@
     }
 
     /**
-     * @param {number} delta as fraction of second
      * @return {?number} targetAngle in radians. 0 is straight down == positive y axis.
      */
-    targetAngle(delta) {
+    targetAngle() {
       if (this._pointer) {
         const angleFromPointer = Math.atan2(this._pointer.x, this._pointer.y);
         if (Number.isFinite(angleFromPointer)) {
@@ -150,7 +149,7 @@
         this._gameStartAt = now;
       }
 
-      const crashed = this._game.tick(delta, this.targetAngle(delta), Boolean(this._gameEndAt));
+      const crashed = this._game.tick(delta, this.targetAngle(), Boolean(this._gameEndAt));
       this.skiingNoises = Boolean(this._game.speed) && !this._gameEndAt;
 
       if (!crashed) {
