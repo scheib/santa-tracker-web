@@ -69,6 +69,13 @@
       this._game.render();
     }
 
+    dismissTutorial() {
+      if (!this._tutorialDismissed) {
+        this._tutorialDismissed = true;
+        api.tutorialDismiss('elfski.mp4');
+      }
+    }
+
     onResize({width, height}) {
       this._canvas.width = width;
       this._canvas.height = height;
@@ -93,10 +100,7 @@
         x: ev.offsetX - (ev.target.offsetWidth / 2),
         y: ev.offsetY - (ev.target.offsetHeight / 3),
       };
-      if (!this._tutorialDismissed) {
-        this._tutorialDismissed = true;
-        api.tutorialDismiss('elfski.mp4');
-      }
+      this.dismissTutorial();
     }
 
     onPointerUp(ev) {
@@ -105,10 +109,7 @@
 
     onKeyDown(ev) {
       this._trackedKeys[ev.key] = true;
-      if (!this._tutorialDismissed) {
-        this._tutorialDismissed = true;
-        api.tutorialDismiss('elfski.mp4');
-      }
+      this.dismissTutorial();
     }
 
     onKeyUp(ev) {
