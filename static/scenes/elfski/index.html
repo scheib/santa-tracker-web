@@ -103,18 +103,49 @@
       this._pointer = null;
     }
 
+    onKeyDown(ev) {
+      this._trackedKeys[ev.key] = true;
+      if (!this._tutorialDismissed) {
+        this._tutorialDismissed = true;
+        api.tutorialDismiss('elfski.mp4');
+      }
+    }
+
+    onKeyUp(ev) {
+      this._trackedKeys[ev.key] = false;
+    }
+
     get score() {
       return this._game.score;
     }
 
     /**
+     * @param {number} delta as fraction of second
      * @return {?number} targetAngle in radians. 0 is straight down == positive y axis.
      */
-    targetAngle() {
+    targetAngle(delta) {
+      let angle = this._lastTargetAngle;
       if (this._pointer) {
-        return Math.atan2(this._pointer.x, this._pointer.y);
+        const angleFromPointer = Math.atan2(this._pointer.x, this._pointer.y);
+        if (Number.isFinite(angleFromPointer)) {
+          angle = angleFromPointer;
+        }
       }
-      return null;
+
+      const angleChangeRate = 3;
+      const angleDelta = delta * angleChangeRate;
+      if (this._trackedKeys['ArrowLeft'] || this._trackedKeys['ArrowRight']) { // left/right keys
+        if (this._trackedKeys['ArrowLeft'])
+          angle -= angleDelta;
+
+        if (this._trackedKeys['ArrowRight'])
+          angle += angleDelta;
+      }
+
+      // Clamp target angle at most being horizontal left or right 90 degrees.
+      angle = Math.min(Math.max(-Math.PI/2, angle), Math.PI/2);
+
+      return this._lastTargetAngle = angle;
     }
 
     tick(now) {
@@ -125,7 +156,7 @@
         this._gameStartAt = now;
       }
 
-      const crashed = this._game.tick(delta, this.targetAngle(), Boolean(this._gameEndAt));
+      const crashed = this._game.tick(delta, this.targetAngle(delta), Boolean(this._gameEndAt));
       this.skiingNoises = Boolean(this._game.speed) && !this._gameEndAt;
 
       if (!crashed) {
@@ -170,6 +201,8 @@
       this._lastValidScore = 0;
       this._lastPresentsFound = 0;
       this.skiingNoises = false;
+      this._trackedKeys = {};
+      this._lastTargetAngle = 0;
 
       this._game && this._game.dispose();
       this._game = new GameThree(this._canvas, './');
@@ -199,8 +232,6 @@
       window.requestAnimationFrame(draw);
       lg.render();
     })();
-
-    // TODO(samthor): Keyboard/gamepad events.
 
     // Install event handlers, including fallback events.
 
@@ -237,6 +268,8 @@
       mountain.addEventListener('touchup', (ev) => lg.onPointerUp(ev));
     }
 
+    document.addEventListener('keydown', (ev) => lg.onKeyDown(ev));
+    document.addEventListener('keyup', (ev) => lg.onKeyUp(ev));
   });
 
 </script>
