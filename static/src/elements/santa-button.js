@@ -84,10 +84,9 @@ export class SantaButtonElement extends LitElement {
   }
 
   focus() {
-    let button = this.shadowRoot.querySelector('button');
-    button.focus();
+    this.shadowRoot.querySelector('button').focus();
   }
-  
+
   _maybePreventClick(event) {
     if (this.disabled) {
       event.stopImmediatePropagation();
