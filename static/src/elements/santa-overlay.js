@@ -60,7 +60,6 @@ export class SantaOverlayElement extends LitElement {
   }
 
   constructor() {
-    console.log("constructor");
     super();
     this.shadowRoot.adoptedStyleSheets = [styles];
   }
@@ -99,7 +98,6 @@ export class SantaOverlayElement extends LitElement {
   }
 
   render() {
-    console.log("render");
     const hasUrl = Boolean(this.shareUrl);
     const heroClass = hasUrl ? 'share' : (this.isPaused ? 'pause' : 'gameover');
 
