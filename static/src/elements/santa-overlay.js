@@ -65,12 +65,10 @@ export class SantaOverlayElement extends LitElement {
     this.shadowRoot.adoptedStyleSheets = [styles];
   }
 
-  focusButton() {
+  focusPlayAgainButton() {
     // Ref needed.
     let button = this.shadowRoot.querySelector('#playagainButton');
-    let button2 = button.shadowRoot.querySelector('button');
-    console.log("focusButton", button, button2);
-    button2.focus();
+    button.focus();
   }
 
   _dispatchRestart(e) {

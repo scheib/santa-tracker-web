@@ -310,7 +310,7 @@ global.subscribe((state) => {
   scoreOverlayElement.isPaused = (!gameover && state.sceneHasPause);
   scoreOverlayElement.shareUrl = state.shareUrl;
   if (!scoreOverlayElement.hidden) {
-    scoreOverlayElement.focusButton();
+    scoreOverlayElement.focusPlayAgainButton();
   }
 
   loaderElement.disabled = !playing;                               // paused/disabled
