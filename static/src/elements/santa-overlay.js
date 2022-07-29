@@ -60,8 +60,14 @@ export class SantaOverlayElement extends LitElement {
   }
 
   constructor() {
+    console.log("constructor");
     super();
     this.shadowRoot.adoptedStyleSheets = [styles];
+  }
+
+  focusButton() {
+    // Ref needed.
+    //this.shadowRoot.querySelector('something something').focus()
   }
 
   _dispatchRestart(e) {
@@ -98,6 +104,7 @@ export class SantaOverlayElement extends LitElement {
   }
 
   render() {
+    console.log("render");
     const hasUrl = Boolean(this.shareUrl);
     const heroClass = hasUrl ? 'share' : (this.isPaused ? 'pause' : 'gameover');
 
