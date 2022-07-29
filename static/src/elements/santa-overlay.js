@@ -65,10 +65,6 @@ export class SantaOverlayElement extends LitElement {
     this.shadowRoot.adoptedStyleSheets = [styles];
   }
 
-  focusPlayAgainButton() {
-    this.shadowRoot.querySelector('#playagainButton').focus();
-  }
-
   _dispatchRestart(e) {
     this.dispatchEvent(new CustomEvent('restart'));
   }
@@ -119,7 +115,7 @@ export class SantaOverlayElement extends LitElement {
         <input aria-label=${_msg`copy-me-short`} type="text" value=${until(this._shortUrl, this.shareUrl)} readonly @click=${this._copyUrl} />
       </div>
       <div class="buttons">
-        <santa-button aria-label=${_msg`play`} color="purple" @click="${this._dispatchResume}" ?hidden=${!this.isPaused}>
+        <santa-button aria-label=${_msg`play`} color="purple" @click="${this._dispatchResume}" ?hidden=${!this.isPaused} id="playButton">
           <svg class="icon"><path d="M8 5v14l11-7z"/></svg>
         </santa-button>
         <santa-button aria-label=${_msg`playagain`} color="purple" @click="${this._dispatchRestart}" id="playagainButton">
@@ -136,6 +132,14 @@ export class SantaOverlayElement extends LitElement {
   </div>
 </div>
 `;
+  }
+
+  focus() {
+    if (this.isPaused) {
+      this.shadowRoot.querySelector('#playButton').focus();
+    } else {
+      this.shadowRoot.querySelector('#playagainButton').focus();
+    }
   }
 
   _onBelowClick(event) {
